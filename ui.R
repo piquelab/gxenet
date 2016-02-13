@@ -22,7 +22,8 @@ shinyUI(fluidPage(
       selectInput('treat', 'Treatment:', treatList,selected = "Dexamethasone"),
       numericInput('modnum', 'Module number:', 66,
                    min = 1, max = 87),
-      textOutput("text1")
+      p(textOutput("text1")),
+      p("It may take a few seconds to load the data.")
     ),
 
     # Show a plot of the generated distribution
