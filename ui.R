@@ -17,10 +17,11 @@ shinyUI(fluidPage(
   # Sidebar with a slider input for number of bins
   sidebarLayout(
     sidebarPanel(
-      selectInput('ct', 'Cell-type:', names(iris)),
-      selectInput('tr', 'Treatment:', names(iris)),
+      selectInput('ct', 'Cell-type:', levels(comb$ct)),
+      selectInput('tr', 'Treatment:', trList,selected = "Dexamethasone"),
       numericInput('modnum', 'Module number:', 66,
-                   min = 1, max = 87)
+                   min = 1, max = 87),
+      textOutput("text1")
     ),
 
     # Show a plot of the generated distribution
