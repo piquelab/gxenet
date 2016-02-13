@@ -2,20 +2,22 @@
 library(shiny)
 library(networkD3)
 
-load("./net.Rd")
+load("net.Rd")
 
-names(comb) <- c("tr","ct","values")
+names(comb) <- c("treat","ct","values")
 names(cytlist)=row.names(comb)
 
-trList <- levels(comb$tr)
-names(trList) <- treatmentKEY[trList,"Common_Name"]
+treatList <- levels(comb$treat)
+names(treatList) <- treatmentKEY[treatList,"Common_Name"]
+
+## save(comb,treatList,file="terms.Rd")
 
 
 # cyt$nodeData$Group = "No_change"
 # cyt$nodeData$Group[(cyt$nodeData$nodeAttribute.logFC>0) & (cyt$nodeData$nodeAttribute.padj<0.1)] = "Upregulated"
 # cyt$nodeData$Group[(cyt$nodeData$nodeAttribute.logFC<0) & (cyt$nodeData$nodeAttribute.padj<0.1)] = "Downregulated"
-prepCyt <- function(tr,ct,modnum){
-  sel <- paste(tr,ct,sep=":")
+prepCyt <- function(treat,ct,modnum){
+  sel <- paste(treat,ct,sep=":")
   cyt <- cytlist[[sel]][[modnum]]
   rownames(cyt$nodeData) <- cyt$nodeData$altName
   cyt$nodeData$nodeNum=(1:nrow(cyt$nodeData))-1
@@ -32,11 +34,11 @@ prepCyt <- function(tr,ct,modnum){
 shinyServer(function(input, output) {
 
   cyt <- reactive({
-    prepCyt(input$tr,input$ct,input$modnum)
+    prepCyt(input$treat,input$ct,input$modnum)
   })
   
   output$text1 <- renderText({ 
-    paste("You have selected: ",input$tr,input$ct,input$modnum)
+    paste("You have selected: ",input$treat,input$ct,input$modnum)
   })
   
   output$netGraph <- renderForceNetwork({

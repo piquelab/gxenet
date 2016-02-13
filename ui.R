@@ -6,8 +6,9 @@
 #
 
 library(shiny)
-##library(networkD3)
+library(networkD3)
 
+load("terms.Rd")
 
 shinyUI(fluidPage(
 
@@ -18,7 +19,7 @@ shinyUI(fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput('ct', 'Cell-type:', levels(comb$ct)),
-      selectInput('tr', 'Treatment:', trList,selected = "Dexamethasone"),
+      selectInput('treat', 'Treatment:', treatList,selected = "Dexamethasone"),
       numericInput('modnum', 'Module number:', 66,
                    min = 1, max = 87),
       textOutput("text1")
